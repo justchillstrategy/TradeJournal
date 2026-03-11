@@ -1,0 +1,66 @@
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import Login    from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import NewTrade  from './pages/NewTrade';
+import Journal   from './pages/Journal';
+import { MonthlyReports, YearlyReports } from './pages/Reports';
+import './styles.css';
+
+// Light theme is forced by default in CSS now. No theme toggle required.
+function Protected({ children }) {
+  const { user, loading } = useAuth();
+  if (loading) return <div className="loading full-page">Loading…</div>;
+  return user ? children : <Navigate to="/login" replace/>;
+}
+
+function Layout() {
+  const { user, logout } = useAuth();
+  const nav = useNavigate();
+  const doLogout = () => { logout(); nav('/login'); };
+
+  return (
+    <div className="layout">
+      <aside className="sidebar">
+        <div className="sidebar-logo">Trading Journal</div>
+        <nav className="sidebar-nav">
+          <NavLink to="/"             end className={({isActive})=>isActive?'nav-item active':'nav-item'}>Dashboard</NavLink>
+          <NavLink to="/new-trade"        className={({isActive})=>isActive?'nav-item active':'nav-item'}>New Trade</NavLink>
+          <NavLink to="/journal"          className={({isActive})=>isActive?'nav-item active':'nav-item'}>Journal</NavLink>
+          <NavLink to="/monthly"          className={({isActive})=>isActive?'nav-item active':'nav-item'}>Monthly</NavLink>
+          <NavLink to="/yearly"           className={({isActive})=>isActive?'nav-item active':'nav-item'}>Yearly</NavLink>
+        </nav>
+        <div className="sidebar-foot">
+          <div className="user-info">@{user?.username}</div>
+          <button className="btn btn-ghost btn-sm" onClick={doLogout}>Logout</button>
+        </div>
+      </aside>
+      <main className="main-content">
+        <Routes>
+          <Route path="/"          element={<Dashboard/>}/>
+          <Route path="/new-trade" element={<NewTrade/>}/>
+          <Route path="/journal"   element={<Journal/>}/>
+          <Route path="/monthly"   element={<MonthlyReports/>}/>
+          <Route path="/yearly"    element={<YearlyReports/>}/>
+          <Route path="*"          element={<Navigate to="/" replace/>}/>
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login"    element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/*" element={<Protected><Layout/></Protected>}/>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
