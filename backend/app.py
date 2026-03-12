@@ -31,6 +31,8 @@ trusted_origins = [
     "http://localhost:3000",
     "https://journalforx.netlify.app"
 ]
+
+# Allow any netlify app in dev/testing if needed, but for now just ensure CORS is robust
 CORS(app, origins=trusted_origins, supports_credentials=True)
 
 jwt = JWTManager(app)
