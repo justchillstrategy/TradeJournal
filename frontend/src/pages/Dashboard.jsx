@@ -33,34 +33,14 @@ export default function Dashboard() {
 
   return (
     <div className="m-page-fade">
-      {/* Desktop Header */}
-      <div className="page-hd m-hide">
-        <div>
-          <h1>Dashboard</h1>
-          <p>Welcome back, {user?.username}. Here's your performance overview.</p>
-        </div>
-      </div>
-
-      {/* Mobile Header */}
-      <div className="page-hd d-hide">
+      <div className="page-hd">
         <div>
           <p style={{ margin: 0, opacity: 0.7, fontSize: '13px' }}>Dashboard</p>
           <h1 style={{ fontSize: '28px' }}>Welcome, {user?.username}</h1>
         </div>
       </div>
 
-      {/* Desktop Stats */}
-      <div className="sg m-hide">
-        {statBoxes.map(b => (
-          <div key={b.label} className="sb">
-            <div className="sl">{b.label}</div>
-            <div className={`sv ${b.cls}`}>{b.value}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Mobile Stats */}
-      <div className="m-stat-grid d-hide">
+      <div className="m-stat-grid">
         {statBoxes.map(b => (
           <div key={b.label} className="m-stat-card">
             <div className="m-stat-label">{b.label}</div>
@@ -74,64 +54,26 @@ export default function Dashboard() {
       {recent.length > 0 && (
         <div style={{ marginTop: 32 }}>
           <h3 style={{ marginBottom: 16, fontSize: '18px', fontWeight: 700 }}>Recent Trades</h3>
-          
-          {/* Desktop Table */}
-          <div className="card m-hide" style={{ padding: 0, overflow: 'hidden' }}>
-            <table className="tbl">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Pair</th>
-                  <th>Model</th>
-                  <th>Result</th>
-                  <th>PNL %</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recent.map(t => (
-                  <tr key={t.id}>
-                    <td>{formatDate(t.date)}</td>
-                    <td style={{ fontWeight: 700 }}>{t.pair}</td>
-                    <td><span className={`pill ${t.model === 'Model 1' ? 'pM1' : 'pM2'}`}>{t.model}</span></td>
-                    <td>
-                      {t.result ? (
-                        <span className={`pill ${t.result === 'Win' ? 'pWin' : t.result === 'Loss' ? 'pLoss' : 'pBE'}`}>
-                          {t.result}
-                        </span>
-                      ) : '—'}
-                    </td>
-                    <td className={`mono ${t.pnl_percentage > 0 ? 'rp' : t.pnl_percentage < 0 ? 'rn' : ''}`}>
-                      {t.pnl_percentage != null ? `${t.pnl_percentage >= 0 ? '+' : ''}${parseFloat(t.pnl_percentage).toFixed(2)}%` : '—'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile Cards */}
-          <div className="d-hide">
-            {recent.map(t => (
-              <div key={t.id} className="m-card m-trade-card">
-                <div className="m-trade-info">
-                  <div className="m-trade-pair">{t.pair}</div>
-                  <div className="m-trade-date">
-                    {formatDate(t.date)} • <span style={{ color: t.model === 'Model 2' ? 'var(--indigo)' : 'var(--purple)' }}>{t.model}</span>
-                  </div>
-                </div>
-                <div className="m-trade-result">
-                  <div className={`m-trade-profit ${t.pnl_percentage > 0 ? 'svG' : t.pnl_percentage < 0 ? 'svR' : ''}`}>
-                    {t.pnl_percentage != null ? `${t.pnl_percentage >= 0 ? '+' : ''}${parseFloat(t.pnl_percentage).toFixed(2)}%` : '—'}
-                  </div>
-                  {t.result && (
-                    <span className={`m-pill ${t.result === 'Win' ? 'm-pill-win' : t.result === 'Loss' ? 'm-pill-loss' : 'm-pill-be'}`}>
-                      {t.result}
-                    </span>
-                  )}
+          {recent.map(t => (
+            <div key={t.id} className="m-card m-trade-card">
+              <div className="m-trade-info">
+                <div className="m-trade-pair">{t.pair}</div>
+                <div className="m-trade-date">
+                  {formatDate(t.date)} • <span style={{ color: t.model === 'Model 2' ? 'var(--indigo)' : 'var(--purple)' }}>{t.model}</span>
                 </div>
               </div>
-            ))}
-          </div>
+              <div className="m-trade-result">
+                <div className={`m-trade-profit ${t.pnl_percentage > 0 ? 'svG' : t.pnl_percentage < 0 ? 'svR' : ''}`}>
+                  {t.pnl_percentage != null ? `${t.pnl_percentage >= 0 ? '+' : ''}${parseFloat(t.pnl_percentage).toFixed(2)}%` : '—'}
+                </div>
+                {t.result && (
+                  <span className={`m-pill ${t.result === 'Win' ? 'm-pill-win' : t.result === 'Loss' ? 'm-pill-loss' : 'm-pill-be'}`}>
+                    {t.result}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
