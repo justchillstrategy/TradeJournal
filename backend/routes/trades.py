@@ -443,11 +443,7 @@ def get_month_trades(year, month):
 
     net_pnl = round(sum(float(t.get("pnl_percentage") or 0) for t in trades), 4)
 
-    # Compounded equity return
-    equity = 1.0
-    for t in trades:
-        equity *= (1 + float(t.get("pnl_percentage") or 0) / 100)
-    total_return = round((equity - 1.0) * 100, 4)
+
 
     # Max consecutive loss streak (negative PnL)
     max_streak = streak = 0
@@ -467,7 +463,6 @@ def get_month_trades(year, month):
             "losses":        losses,
             "winRate":       win_rate,
             "netPNL":        net_pnl,
-            "totalReturn":   total_return,
             "maxLossStreak": max_streak,
         }
     )

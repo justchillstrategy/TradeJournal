@@ -159,8 +159,7 @@ def _build_month_pdf(username: str, year: int, month: int,
     wr_c = C_WIN if wr > 50 else (C_LOSS if wr < 50 else C_DARK)
     npnl = _sf(s.get("netPNL"))
     npnl_c = C_WIN if npnl > 0 else (C_LOSS if npnl < 0 else C_DARK)
-    tr = _sf(s.get("totalReturn"))
-    tr_c = C_WIN if tr > 0 else (C_LOSS if tr < 0 else C_DARK)
+
 
     stat_rows = [
         [
@@ -428,7 +427,7 @@ def export_month_pdf(year, month):
             max_streak = max(max_streak, streak)
         else:
             streak = 0
-    total_return = round((equity - 1.0) * 100, 4)
+
 
     max_dd = 0.0 # Placeholder
 
@@ -438,7 +437,7 @@ def export_month_pdf(year, month):
     stats = dict(
         totalTrades=total, wins=wins, losses=losses,
         winRate=win_rate, netPNL=net_pnl,
-        totalReturn=total_return, maxLossStreak=max_streak,
+        maxLossStreak=max_streak,
         avgRR=avg_rr
     )
 
