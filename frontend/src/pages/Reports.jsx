@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { formatDate } from '../utils/dateHelper';
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -13,18 +12,6 @@ function StatBadge({ label, value, cls='' }) {
       <div className={`rpt-sv ${cls}`}>{value != null ? value : '—'}</div>
     </div>
   );
-}
-
-function CustomTooltip({ active, payload, label }) {
-  if (active && payload && payload.length) {
-    return (
-      <div style={{background:'#fff',border:'1px solid #E2E8F0',padding:'8px 12px',borderRadius:'8px',boxShadow:'0 4px 6px -1px rgb(0 0 0 / 0.1)'}}>
-        <p style={{margin:0,fontSize:12,fontWeight:600,color:'#64748B'}}>{`Trade ${label}`}</p>
-        <p style={{margin:0,fontSize:14,fontWeight:700,color:'#2563EB'}}>{`${payload[0].value}% Equity`}</p>
-      </div>
-    );
-  }
-  return null;
 }
 
 export function MonthlyReports() {
@@ -98,22 +85,23 @@ export function MonthlyReports() {
           </div>
 
           <div className="card" style={{padding:0,overflow:'hidden'}}>
-            <table className="tbl">
-              <thead><tr><th>Date</th><th>Pair</th><th>Grade</th><th>Dir</th><th>Risk</th><th>Result</th><th>R:R</th><th>PNL</th></tr></thead>
-              <tbody>
-                {data.trades.map(t=>(
-                  <tr key={t.id} className={t.status === 'final' ? 'tr-final' : ''}>
-                    <td>{formatDate(t.date)}</td><td><strong>{t.pair}</strong></td>
-                    <td><span className={`pill ${t.grade==='A+'?'pAp':t.grade==='A'?'pB':'pLow'}`}>{t.grade}</span></td>
-                    <td>{t.direction}</td><td>{t.risk_percent}%</td>
-                    
-                    <td>{t.result?<span className={`pill ${t.result==='Win'?'pWin':t.result==='Loss'?'pLoss':'pBE'}`}>{t.result}</span>:'—'}</td>
-                    <td className="mono">{t.r_multiple?`${parseFloat(t.r_multiple).toFixed(2)}R`:'—'}</td>
-                    <td className={t.pnl_percentage>0?'rp':t.pnl_percentage<0?'rn':'mono'}>{t.pnl_percentage!=null?`${t.pnl_percentage>=0?'+':''}${parseFloat(t.pnl_percentage).toFixed(2)}%`:'—'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="tbl-wrap">
+              <table className="tbl">
+                <thead><tr><th>Date</th><th>Pair</th><th>Grade</th><th>Dir</th><th>Risk</th><th>Result</th><th>R:R</th><th>PNL</th></tr></thead>
+                <tbody>
+                  {data.trades.map(t=>(
+                    <tr key={t.id} className={t.status === 'final' ? 'tr-final' : ''}>
+                      <td>{formatDate(t.date)}</td><td><strong>{t.pair}</strong></td>
+                      <td><span className={`pill ${t.grade==='A+'?'pAp':t.grade==='A'?'pB':'pLow'}`}>{t.grade}</span></td>
+                      <td>{t.direction}</td><td>{t.risk_percent}%</td>
+                      <td>{t.result?<span className={`pill ${t.result==='Win'?'pWin':t.result==='Loss'?'pLoss':'pBE'}`}>{t.result}</span>:'—'}</td>
+                      <td className="mono">{t.r_multiple?`${parseFloat(t.r_multiple).toFixed(2)}R`:'—'}</td>
+                      <td className={t.pnl_percentage>0?'rp':t.pnl_percentage<0?'rn':'mono'}>{t.pnl_percentage!=null?`${t.pnl_percentage>=0?'+':''}${parseFloat(t.pnl_percentage).toFixed(2)}%`:'—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}
@@ -199,24 +187,24 @@ export function YearlyReports() {
             </div>
           </div>
 
-
           <div className="card" style={{padding:0,overflow:'hidden'}}>
-            <table className="tbl">
-              <thead><tr><th>Date</th><th>Pair</th><th>Grade</th><th>Dir</th><th>Risk</th><th>Result</th><th>R:R</th><th>PNL</th></tr></thead>
-              <tbody>
-                {data.trades.map(t=>(
-                  <tr key={t.id} className={t.status === 'final' ? 'tr-final' : ''}>
-                    <td>{formatDate(t.date)}</td><td><strong>{t.pair}</strong></td>
-                    <td><span className={`pill ${t.grade==='A+'?'pAp':t.grade==='A'?'pB':'pLow'}`}>{t.grade}</span></td>
-                    <td>{t.direction}</td><td>{t.risk_percent}%</td>
-                    
-                    <td>{t.result?<span className={`pill ${t.result==='Win'?'pWin':t.result==='Loss'?'pLoss':'pBE'}`}>{t.result}</span>:'—'}</td>
-                    <td className="mono">{t.r_multiple?`${parseFloat(t.r_multiple).toFixed(2)}R`:'—'}</td>
-                    <td className={t.pnl_percentage>0?'rp':t.pnl_percentage<0?'rn':'mono'}>{t.pnl_percentage!=null?`${t.pnl_percentage>=0?'+':''}${parseFloat(t.pnl_percentage).toFixed(2)}%`:'—'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="tbl-wrap">
+              <table className="tbl">
+                <thead><tr><th>Date</th><th>Pair</th><th>Grade</th><th>Dir</th><th>Risk</th><th>Result</th><th>R:R</th><th>PNL</th></tr></thead>
+                <tbody>
+                  {data.trades.map(t=>(
+                    <tr key={t.id} className={t.status === 'final' ? 'tr-final' : ''}>
+                      <td>{formatDate(t.date)}</td><td><strong>{t.pair}</strong></td>
+                      <td><span className={`pill ${t.grade==='A+'?'pAp':t.grade==='A'?'pB':'pLow'}`}>{t.grade}</span></td>
+                      <td>{t.direction}</td><td>{t.risk_percent}%</td>
+                      <td>{t.result?<span className={`pill ${t.result==='Win'?'pWin':t.result==='Loss'?'pLoss':'pBE'}`}>{t.result}</span>:'—'}</td>
+                      <td className="mono">{t.r_multiple?`${parseFloat(t.r_multiple).toFixed(2)}R`:'—'}</td>
+                      <td className={t.pnl_percentage>0?'rp':t.pnl_percentage<0?'rn':'mono'}>{t.pnl_percentage!=null?`${t.pnl_percentage>=0?'+':''}${parseFloat(t.pnl_percentage).toFixed(2)}%`:'—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}

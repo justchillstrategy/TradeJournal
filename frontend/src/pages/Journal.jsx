@@ -102,44 +102,46 @@ export default function Journal() {
         </div>
       ) : (
         <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-          <table className="tbl">
-            <thead>
-              <tr>
-                <th>Date</th><th>Pair</th><th>Model</th><th>Grade</th>
-                <th>Status</th><th>RR</th><th>PNL</th><th>Result</th><th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {trades.map(t => (
-                <tr key={t.id} className={t.status === 'final' ? 'tr-final' : ''}>
-                  <td>{formatDate(t.date)}</td>
-                  <td><strong>{t.pair}</strong></td>
-                  <td><span className={`pill ${t.model === 'Model 2' ? 'pM2' : 'pM1'}`}>{t.model}</span></td>
-                  <td><span className={`pill ${t.grade === 'A+' ? 'pAp' : t.grade === 'A' ? 'pB' : 'pLow'}`}>{t.grade}</span></td>
-                  <td><span className={`pill ${t.status === 'final' ? 'pFin' : 'pDft'}`}>{t.status}</span></td>
-                  <td className="mono">{t.r_multiple != null ? `${parseFloat(t.r_multiple).toFixed(2)}R` : '—'}</td>
-                  <td className={t.pnl_percentage > 0 ? 'rp' : t.pnl_percentage < 0 ? 'rn' : 'mono'}>
-                    {t.pnl_percentage != null
-                      ? `${t.pnl_percentage >= 0 ? '+' : ''}${parseFloat(t.pnl_percentage).toFixed(2)}%`
-                      : '—'}
-                  </td>
-                  <td>
-                    {t.result
-                      ? <span className={`pill ${t.result === 'Win' ? 'pWin' : t.result === 'Loss' ? 'pLoss' : 'pBE'}`}>{t.result}</span>
-                      : t.status === 'final'
-                        ? <button className="btn btn-xs btn-ghost" onClick={() => setAddResult({ trade: t, result: '', rMult: '' })}>+ Result</button>
-                        : '—'}
-                  </td>
-                  <td>
-                    <div style={{ display: 'flex', gap: 4 }}>
-                      <button className="btn btn-xs btn-ghost" onClick={() => setEditing(t)}>Edit</button>
-                      <button className="btn btn-xs btn-danger" onClick={() => del(t.id)}>Del</button>
-                    </div>
-                  </td>
+          <div className="tbl-wrap">
+            <table className="tbl">
+              <thead>
+                <tr>
+                  <th>Date</th><th>Pair</th><th>Model</th><th>Grade</th>
+                  <th>Status</th><th>RR</th><th>PNL</th><th>Result</th><th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {trades.map(t => (
+                  <tr key={t.id} className={t.status === 'final' ? 'tr-final' : ''}>
+                    <td>{formatDate(t.date)}</td>
+                    <td><strong>{t.pair}</strong></td>
+                    <td><span className={`pill ${t.model === 'Model 2' ? 'pM2' : 'pM1'}`}>{t.model}</span></td>
+                    <td><span className={`pill ${t.grade === 'A+' ? 'pAp' : t.grade === 'A' ? 'pB' : 'pLow'}`}>{t.grade}</span></td>
+                    <td><span className={`pill ${t.status === 'final' ? 'pFin' : 'pDft'}`}>{t.status}</span></td>
+                    <td className="mono">{t.r_multiple != null ? `${parseFloat(t.r_multiple).toFixed(2)}R` : '—'}</td>
+                    <td className={t.pnl_percentage > 0 ? 'rp' : t.pnl_percentage < 0 ? 'rn' : 'mono'}>
+                      {t.pnl_percentage != null
+                        ? `${t.pnl_percentage >= 0 ? '+' : ''}${parseFloat(t.pnl_percentage).toFixed(2)}%`
+                        : '—'}
+                    </td>
+                    <td>
+                      {t.result
+                        ? <span className={`pill ${t.result === 'Win' ? 'pWin' : t.result === 'Loss' ? 'pLoss' : 'pBE'}`}>{t.result}</span>
+                        : t.status === 'final'
+                          ? <button className="btn btn-xs btn-ghost" onClick={() => setAddResult({ trade: t, result: '', rMult: '' })}>+ Result</button>
+                          : '—'}
+                    </td>
+                    <td>
+                      <div style={{ display: 'flex', gap: 4 }}>
+                        <button className="btn btn-xs btn-ghost" onClick={() => setEditing(t)}>Edit</button>
+                        <button className="btn btn-xs btn-danger" onClick={() => del(t.id)}>Del</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 

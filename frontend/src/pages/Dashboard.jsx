@@ -48,21 +48,23 @@ export default function Dashboard() {
       {recent.length > 0 && (
         <div className="card" style={{ marginTop:24 }}>
           <div className="card-title">Recent Trades</div>
-          <table className="tbl">
-            <thead><tr><th>Date</th><th>Pair</th><th>Model</th><th>Grade</th><th>Result</th><th>PNL</th></tr></thead>
-            <tbody>
-              {recent.map(t => (
-                <tr key={t.id} className={t.status === 'final' ? 'tr-final' : ''}>
-                  <td>{formatDate(t.date)}</td>
-                  <td><strong>{t.pair}</strong></td>
-                  <td><span className={`pill ${t.model === 'Model 2' ? 'pM2' : 'pM1'}`}>{t.model}</span></td>
-                  <td><span className={`pill ${t.grade === 'A+' ? 'pAp' : t.grade === 'A' ? 'pB' : 'pLow'}`}>{t.grade}</span></td>
-                  <td>{t.result ? <span className={`pill ${t.result === 'Win' ? 'pWin' : t.result === 'Loss' ? 'pLoss' : 'pBE'}`}>{t.result}</span> : '—'}</td>
-                  <td className={t.pnl_percentage > 0 ? 'rp' : t.pnl_percentage < 0 ? 'rn' : 'mono'}>{t.pnl_percentage != null ? `${t.pnl_percentage >= 0 ? '+' : ''}${parseFloat(t.pnl_percentage).toFixed(2)}%` : '—'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="tbl-wrap">
+            <table className="tbl">
+              <thead><tr><th>Date</th><th>Pair</th><th>Model</th><th>Grade</th><th>Result</th><th>PNL</th></tr></thead>
+              <tbody>
+                {recent.map(t => (
+                  <tr key={t.id} className={t.status === 'final' ? 'tr-final' : ''}>
+                    <td>{formatDate(t.date)}</td>
+                    <td><strong>{t.pair}</strong></td>
+                    <td><span className={`pill ${t.model === 'Model 2' ? 'pM2' : 'pM1'}`}>{t.model}</span></td>
+                    <td><span className={`pill ${t.grade === 'A+' ? 'pAp' : t.grade === 'A' ? 'pB' : 'pLow'}`}>{t.grade}</span></td>
+                    <td>{t.result ? <span className={`pill ${t.result === 'Win' ? 'pWin' : t.result === 'Loss' ? 'pLoss' : 'pBE'}`}>{t.result}</span> : '—'}</td>
+                    <td className={t.pnl_percentage > 0 ? 'rp' : t.pnl_percentage < 0 ? 'rn' : 'mono'}>{t.pnl_percentage != null ? `${t.pnl_percentage >= 0 ? '+' : ''}${parseFloat(t.pnl_percentage).toFixed(2)}%` : '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
