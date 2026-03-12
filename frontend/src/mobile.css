@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
+@media (max-width: 768px) {
 :root {
   /* Vibrant & Premium Palette */
   --m-primary: #6366f1;
@@ -260,4 +261,5 @@ h1, h2, h3, .font-heading {
   font-weight: 800;
   font-family: 'Outfit', sans-serif;
   font-size: 18px;
+}
 }
