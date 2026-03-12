@@ -126,6 +126,7 @@ def dashboard():
         avgRR=avg_rr if (avg_rr is not None and avg_rr != "—") else "—",
         maxDrawdown=round(max_dd, 2),
         maxLossStreak=max_streak,
+        winRateFixed=True,
         equityCurve=equity_curve,
         distribution=distribution,
     )
