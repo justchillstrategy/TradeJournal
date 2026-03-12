@@ -49,21 +49,19 @@
 }
 
 .ci {
-  flex-direction: row !important;
-  align-items: center !important;
-  gap: 12px !important;
-  padding: 10px 16px !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  padding: 16px !important;
 }
 
 .ci-pts {
-  margin-left: auto !important;
-  margin-top: 0 !important;
-  font-size: 0.85rem !important;
-  font-weight: 800 !important;
+  margin-left: 0 !important;
+  margin-top: 4px;
 }
 
 .sc-blk {
-  padding: 16px !important;
+  padding: 20px !important;
 }
 
 /* ────────────────────────────────────────────────── */
