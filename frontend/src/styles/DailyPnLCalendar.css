@@ -1,0 +1,286 @@
+/* ─────────────────────────────────────────────────────────────
+   DailyPnLCalendar — New clean stylesheet
+   ───────────────────────────────────────────────────────────── */
+
+/* Wrapper */
+.dpnl-wrap {
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* Card */
+.dpnl-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Header */
+.dpnl-header {
+  margin-bottom: 20px;
+}
+.dpnl-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1e293b;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+/* Weekday label row */
+.dpnl-labels {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.dpnl-label {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Calendar grid */
+.dpnl-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+/* Individual cell */
+.dpnl-cell {
+  border-radius: 10px;
+  box-sizing: border-box;
+  min-height: 80px;
+  overflow: hidden;
+}
+
+/* Padding (empty) cells */
+.dpnl-cell--pad {
+  background: transparent;
+  border: none;
+}
+
+/* Day cells */
+.dpnl-cell--day {
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Clickable */
+.dpnl-cell--click {
+  cursor: pointer;
+}
+.dpnl-cell--click:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  z-index: 1;
+}
+
+/* PnL states */
+.dpnl-cell--pos { background: #f0fdf4; border-color: #bbf7d0; }
+.dpnl-cell--neg { background: #fef2f2; border-color: #fecaca; }
+.dpnl-cell--neu { background: #f8fafc; border-color: #e2e8f0; }
+
+/* Cell content */
+.dpnl-date {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  line-height: 1;
+}
+.dpnl-cell--pos .dpnl-date { color: #166534; }
+.dpnl-cell--neg .dpnl-date { color: #991b1b; }
+
+.dpnl-pnl {
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dpnl-cell--pos .dpnl-pnl { color: #16a34a; }
+.dpnl-cell--neg .dpnl-pnl { color: #dc2626; }
+.dpnl-cell--neu .dpnl-pnl { color: #64748b; }
+
+.dpnl-count {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ── MODAL ──────────────────────────────────────────────────── */
+.dpnl-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: dpnlFadeIn 0.2s ease;
+}
+@keyframes dpnlFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.dpnl-modal {
+  background: #ffffff;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+  animation: dpnlSlideUp 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes dpnlSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.dpnl-modal-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.dpnl-modal-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+.dpnl-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #94a3b8;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.15s;
+}
+.dpnl-modal-close:hover { color: #ef4444; }
+
+.dpnl-modal-body {
+  padding: 20px 24px 24px;
+}
+
+/* Modal table */
+.dpnl-modal-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.dpnl-modal-tbl th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+  padding: 0 8px 10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.dpnl-modal-tbl td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #f8fafc;
+  color: #334155;
+  vertical-align: middle;
+}
+.dpnl-modal-tbl tr:last-child td { border-bottom: none; }
+
+/* Direction badge */
+.dpnl-dir {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+.dpnl-dir--buy  { background: #dbeafe; color: #1d4ed8; }
+.dpnl-dir--sell { background: #fce7f3; color: #be185d; }
+
+/* Result pill */
+.dpnl-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+.dpnl-pill--win       { background: #dcfce7; color: #16a34a; }
+.dpnl-pill--loss      { background: #fee2e2; color: #dc2626; }
+.dpnl-pill--breakeven { background: #f1f5f9; color: #64748b; }
+
+/* PnL colors */
+.dpnl-up { color: #16a34a; font-weight: 700; }
+.dpnl-dn { color: #dc2626; font-weight: 700; }
+
+/* Mono */
+.dpnl-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+
+/* Summary row */
+.dpnl-modal-sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* Empty state */
+.dpnl-empty { text-align: center; color: #94a3b8; padding: 24px 0; }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .dpnl-cell--day { min-height: 68px; }
+}
+
+@media (max-width: 768px) {
+  .dpnl-card { padding: 14px 12px; }
+  .dpnl-title { font-size: 0.8rem; }
+  .dpnl-labels { gap: 4px; }
+  .dpnl-label { font-size: 0.6rem; }
+  .dpnl-grid { gap: 4px; }
+  .dpnl-cell--day {
+    min-height: 52px;
+    padding: 5px 3px;
+    border-radius: 7px;
+  }
+  .dpnl-date { font-size: 0.65rem; }
+  .dpnl-pnl  { font-size: 0.62rem; }
+  .dpnl-count { display: none; }
+  .dpnl-modal { border-radius: 16px; }
+  .dpnl-modal-hd { padding: 16px 16px 12px; }
+  .dpnl-modal-body { padding: 14px 16px 20px; }
+  .dpnl-modal-tbl th, .dpnl-modal-tbl td { padding: 8px 4px; font-size: 0.78rem; }
+}
+
+@media (max-width: 400px) {
+  .dpnl-label { font-size: 0.55rem; letter-spacing: 0; }
+  .dpnl-cell--day { min-height: 44px; }
+  .dpnl-pnl { display: none; }
+}

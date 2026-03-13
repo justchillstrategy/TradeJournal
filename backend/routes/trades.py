@@ -454,16 +454,44 @@ def get_month_trades(year, month):
         else:
             streak = 0
 
+    # Daily PnL breakdown — group by date
+    daily_breakdown = {}
+    for t in trades:
+        d_str = (t.get("date") or "")[:10]
+        if not d_str:
+            continue
+        pnl_v = float(t.get("pnl_percentage") or 0)
+        if d_str not in daily_breakdown:
+            daily_breakdown[d_str] = {
+                "date":        d_str,
+                "net_pnl":     0.0,
+                "trade_count": 0,
+                "trades":      [],
+            }
+        daily_breakdown[d_str]["net_pnl"]     = round(daily_breakdown[d_str]["net_pnl"] + pnl_v, 4)
+        daily_breakdown[d_str]["trade_count"] += 1
+        daily_breakdown[d_str]["trades"].append({
+            "id":         str(t.get("_id")),
+            "pair":       t.get("pair"),
+            "model":      t.get("model"),
+            "direction":  t.get("direction"),
+            "pnl":        pnl_v,
+            "r_multiple": t.get("r_multiple"),
+            "grade":      t.get("grade"),
+            "result":     t.get("result"),
+        })
+
     return jsonify(
         v="v2",
         trades=out_trades,
         stats={
-            "totalTrades":   total,
-            "wins":          wins,
-            "losses":        losses,
-            "winRate":       win_rate,
-            "netPNL":        net_pnl,
-            "maxLossStreak": max_streak,
+            "totalTrades":    total,
+            "wins":           wins,
+            "losses":         losses,
+            "winRate":        win_rate,
+            "netPNL":         net_pnl,
+            "maxLossStreak":  max_streak,
+            "dailyBreakdown": daily_breakdown,
         }
     )
 

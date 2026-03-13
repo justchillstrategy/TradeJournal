@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 import { formatDate } from '../utils/dateHelper';
+import DailyPnLCalendar from '../components/DailyPnLCalendar';
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const YEARS = [2024, 2025, 2026, 2027];
@@ -83,6 +84,12 @@ export function MonthlyReports() {
             <StatBadge label="Net PNL" value={`${data.stats.netPNL>=0?'+':''}${data.stats.netPNL}%`} cls={data.stats.netPNL > 0 ? 'rp' : data.stats.netPNL < 0 ? 'rn' : ''}/>
             <StatBadge label="Max Loss Streak" value={data.stats.maxLossStreak} cls="rn"/>
           </div>
+
+          <DailyPnLCalendar
+            year={year}
+            month={month}
+            dailyBreakdown={data.stats.dailyBreakdown || {}}
+          />
 
           <div className="card" style={{padding:0,overflow:'hidden'}}>
             <div className="tbl-wrap">
