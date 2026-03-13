@@ -164,7 +164,7 @@ export default function DailyPnLCalendar({ year, month, dailyBreakdown = {} }) {
                             {t.result || '—'}
                           </span>
                         </td>
-                        <td className={t.pnl > 0 ? 'dpnl-up' : t.pnl < 0 ? 'dpnl-dn' : ''}>
+                        <td className={t.pnl > 0 ? 'dpnl-up' : t.pnl < 0 ? 'dpnl-dn' : 'dpnl-zero'}>
                           {t.pnl > 0 ? '+' : ''}{parseFloat(t.pnl || 0).toFixed(2)}%
                         </td>
                       </tr>

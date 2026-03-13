@@ -231,11 +231,12 @@
 .dpnl-pill--breakeven { background: #f1f5f9; color: #64748b; }
 
 /* PnL colors */
-.dpnl-up { color: #16a34a; font-weight: 700; }
-.dpnl-dn { color: #dc2626; font-weight: 700; }
+.dpnl-up   { color: #16a34a; font-weight: 700; }
+.dpnl-dn   { color: #dc2626; font-weight: 700; }
+.dpnl-zero { color: #0f172a; font-weight: 700; }
 
-/* Mono */
-.dpnl-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+/* Mono / Risk */
+.dpnl-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #1e293b; font-weight: 600; }
 
 /* Summary row */
 .dpnl-modal-sum {
