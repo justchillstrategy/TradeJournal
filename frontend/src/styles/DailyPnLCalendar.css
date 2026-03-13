@@ -211,15 +211,13 @@
 }
 .dpnl-modal-tbl tr:last-child td { border-bottom: none; }
 
-/* Direction badge */
+/* Direction — plain colored text, no badge */
 .dpnl-dir {
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 99px;
 }
-.dpnl-dir--buy  { background: #dcfce7; color: #16a34a; }
-.dpnl-dir--sell { background: #fee2e2; color: #dc2626; }
+.dpnl-dir--buy  { color: #16a34a; }
+.dpnl-dir--sell { color: #dc2626; }
 
 /* Result pill */
 .dpnl-pill {
