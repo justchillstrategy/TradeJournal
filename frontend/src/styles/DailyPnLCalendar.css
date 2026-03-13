@@ -218,8 +218,8 @@
   padding: 2px 8px;
   border-radius: 99px;
 }
-.dpnl-dir--buy  { background: #dbeafe; color: #1d4ed8; }
-.dpnl-dir--sell { background: #fce7f3; color: #be185d; }
+.dpnl-dir--buy  { background: #dcfce7; color: #16a34a; }
+.dpnl-dir--sell { background: #fee2e2; color: #dc2626; }
 
 /* Result pill */
 .dpnl-pill {
